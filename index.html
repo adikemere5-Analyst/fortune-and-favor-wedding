@@ -866,3 +866,478 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Favour &amp; Fortune — Wedding Invitation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --white: #ffffff;
+      --ivory: #fffdf9;
+      --champagne: #fbf5e6;
+      --gold-deep: #7a5400;
+      --gold: #b8860b;
+      --gold-bright: #d4af37;
+      --gold-soft: #e6cf8b;
+      --gold-tint: rgba(212, 175, 55, 0.14);
+      --text: #231d11;
+      --muted: #6b5d42;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      color: var(--text);
+      min-height: 100vh;
+      /* FIRST IMAGE AS BACKGROUND DESIGN WITH WHITE & GOLD VEIL */
+      background-image:
+        linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.84) 0%,
+          rgba(252, 246, 232, 0.80) 50%,
+          rgba(244, 228, 189, 0.86) 100%
+        ),
+        url("images/photo1.jpg");
+      background-size: cover;
+      background-position: center top;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      overflow-x: hidden;
+    }
+
+    .shimmer-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(2.5px 2.5px at 16% 22%, rgba(212, 175, 55, 0.6), transparent),
+        radial-gradient(3px 3px at 78% 16%, rgba(184, 134, 11, 0.45), transparent),
+        radial-gradient(2px 2px at 30% 80%, rgba(212, 175, 55, 0.55), transparent),
+        radial-gradient(3px 3px at 86% 68%, rgba(212, 175, 55, 0.4), transparent),
+        radial-gradient(2px 2px at 50% 38%, rgba(184, 134, 11, 0.45), transparent);
+      z-index: 0;
+    }
+
+    /* ================= 1. ROYAL WAX-SEALED ENVELOPE ENTRANCE ================= */
+    #entrance-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.88) 0%, rgba(251, 243, 223, 0.84) 58%, rgba(237, 214, 156, 0.90) 100%),
+        url("images/photo1.jpg");
+      background-size: cover;
+      background-position: center top;
+      cursor: pointer;
+      perspective: 1400px;
+      transition: opacity 0.8s ease 0.55s, visibility 0.8s ease 0.55s;
+    }
+
+    #entrance-screen.opened {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .envelope-stage {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      border-radius: 26px;
+      padding: 9px;
+      background: linear-gradient(135deg, #f5e3b0 0%, #ffffff 48%, #d8b254 100%);
+      box-shadow: 0 32px 80px rgba(122, 84, 0, 0.28);
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    #entrance-screen:not(.opened) .envelope-stage:hover {
+      transform: translateY(-6px) scale(1.01);
+    }
+
+    #entrance-screen.opened .envelope-stage {
+      transform: scale(1.08);
+    }
+
+    .envelope-body {
+      position: relative;
+      background: linear-gradient(180deg, rgba(255, 254, 251, 0.95) 0%, rgba(252, 245, 227, 0.95) 100%);
+      border: 1.5px solid var(--gold-soft);
+      border-radius: 19px;
+      padding: 4.5rem 2rem 3.2rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .corner {
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      border-color: var(--gold-bright);
+      border-style: solid;
+      opacity: 0.75;
+      pointer-events: none;
+    }
+    .corner.tl { top: 14px; left: 14px; border-width: 2px 0 0 2px; border-top-left-radius: 10px; }
+    .corner.tr { top: 14px; right: 14px; border-width: 2px 2px 0 0; border-top-right-radius: 10px; }
+    .corner.bl { bottom: 14px; left: 14px; border-width: 0 0 2px 2px; border-bottom-left-radius: 10px; }
+    .corner.br { bottom: 14px; right: 14px; border-width: 0 2px 2px 0; border-bottom-right-radius: 10px; }
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 155px;
+      background: linear-gradient(180deg, #f6e6bc 0%, #fffdf8 100%);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      border-bottom: 2px solid var(--gold-bright);
+      transform-origin: top center;
+      transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 2;
+      box-shadow: 0 10px 25px rgba(184, 134, 11, 0.15);
+    }
+
+    #entrance-screen.opened .envelope-flap {
+      transform: rotateX(180deg);
+    }
+
+    .envelope-crease {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 156px;
+      background: linear-gradient(180deg, rgba(212, 175, 55, 0.45), transparent);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .wax-seal {
+      position: relative;
+      z-index: 4;
+      width: 96px;
+      height: 96px;
+      margin: 2.2rem auto 1.4rem;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 28%, #f8e49c 0%, #d4af37 42%, #9a6e06 88%, #735000 100%);
+      border: 3px solid #f7e6ad;
+      box-shadow:
+        0 12px 28px rgba(122, 84, 0, 0.38),
+        inset 0 2px 6px rgba(255, 255, 255, 0.65),
+        inset 0 -4px 8px rgba(92, 62, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fffdf7;
+      transition: transform 0.45s ease, opacity 0.45s ease;
+      animation: sealGlow 2.6s ease-in-out infinite;
+    }
+
+    .wax-seal::after {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 253, 245, 0.75);
+    }
+
+    .wax-seal span.initials {
+      font-family: "Cinzel", serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-shadow: 0 1px 3px rgba(85, 57, 0, 0.5);
+    }
+
+    .wax-seal span.tap-word {
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 2px;
+      opacity: 0.95;
+    }
+
+    #entrance-screen.opened .wax-seal {
+      transform: scale(0.4) rotate(25deg);
+      opacity: 0;
+    }
+
+    @keyframes sealGlow {
+      0%, 100% {
+        box-shadow: 0 12px 28px rgba(122, 84, 0, 0.35), 0 0 0 0 rgba(212, 175, 55, 0.45);
+      }
+      50% {
+        box-shadow: 0 16px 34px rgba(122, 84, 0, 0.45), 0 0 0 12px rgba(212, 175, 55, 0);
+      }
+    }
+
+    .eyebrow {
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.74rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.65rem;
+      font-weight: 600;
+    }
+
+    .hero-names {
+      font-family: "Cinzel", Georgia, serif;
+      font-size: clamp(2.5rem, 7.5vw, 4.7rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+      background: linear-gradient(135deg, #755000 0%, #d4af37 48%, #8c6200 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.65rem;
+    }
+
+    .hero-date {
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+    }
+
+    .open-pill {
+      display: inline-block;
+      padding: 0.7rem 1.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--gold-bright);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--gold-deep);
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    /* ================= 2. MAIN INVITATION PAGE ================= */
+    #main-invitation {
+      position: relative;
+      z-index: 1;
+      display: none;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2.5rem 1.15rem 4.5rem;
+      animation: revealPage 1s ease forwards;
+    }
+
+    @keyframes revealPage {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .main-foil-wrap {
+      padding: 8px;
+      border-radius: 26px;
+      background: linear-gradient(160deg, rgba(236, 213, 149, 0.92) 0%, rgba(255, 255, 255, 0.92) 45%, rgba(226, 194, 109, 0.92) 100%);
+      box-shadow: 0 24px 60px rgba(140, 98, 0, 0.22);
+    }
+
+    .card {
+      background: rgba(255, 253, 249, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--gold-soft);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .monogram-badge {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 1.1rem;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold-bright);
+      background: radial-gradient(circle, #ffffff 30%, #fbf3df 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Cinzel", serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--gold);
+      box-shadow: 0 6px 20px rgba(184, 134, 11, 0.16);
+    }
+
+    .couple-header h1 {
+      font-family: "Cinzel", Georgia, serif;
+      font-size: clamp(2.1rem, 5vw, 3.3rem);
+      font-weight: 700;
+      color: var(--gold-deep);
+      letter-spacing: 0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .couple-header p.verse {
+      color: var(--muted);
+      font-size: 1.2rem;
+      font-style: italic;
+      max-width: 560px;
+      margin: 0 auto 1.75rem;
+      line-height: 1.55;
+    }
+
+    .ornament-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.9rem;
+      margin: 2.2rem 0;
+      color: var(--gold-bright);
+    }
+
+    .ornament-divider::before,
+    .ornament-divider::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      max-width: 180px;
+      background: linear-gradient(90deg, transparent, var(--gold-bright));
+    }
+
+    .ornament-divider::after {
+      background: linear-gradient(90deg, var(--gold-bright), transparent);
+    }
+
+    /* Countdown Timer */
+    .countdown-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+      margin: 0 auto 2.2rem;
+    }
+
+    .time-box {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(250, 241, 219, 0.95) 100%);
+      border: 1.5px solid var(--gold-soft);
+      border-radius: 14px;
+      min-width: 78px;
+      padding: 0.8rem 0.65rem;
+      box-shadow: 0 6px 16px rgba(184, 134, 11, 0.08);
+    }
+
+    .time-box span.num {
+      display: block;
+      font-family: "Cinzel", serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--gold-deep);
+      line-height: 1.1;
+    }
+
+    .time-box span.unit {
+      display: block;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-top: 0.3rem;
+      font-weight: 600;
+    }
+
+    /* Featured Center Portrait Frame (Second Image) */
+    .featured-photo-wrap {
+      max-width: 440px;
+      margin: 0 auto 1.2rem;
+    }
+
+    .photo-frame {
+      background: #ffffff;
+      padding: 12px 12px 18px;
+      border-radius: 18px;
+      border: 1.5px solid var(--gold-soft);
+      box-shadow: 0 16px 38px rgba(140, 98, 0, 0.16);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .photo-frame:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 20px 44px rgba(140, 98, 0, 0.22);
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .section-title {
+      font-family: "Cinzel", Georgia, serif;
+      font-size: 1.45rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--gold-deep);
+      margin-bottom: 1.2rem;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.1rem;
+      text-align: left;
+    }
+
+    .detail-card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(252, 247, 235, 0.96) 100%);
+      border: 1px solid var(--gold-soft);
+      border-left: 4px solid var(--gold-bright);
+      border-radius: 14px;
+      padding: 1.2rem 1.3rem;
+      box-shadow: 0 6px 18px rgba(184, 134, 11, 0.06);
+    }
+
+    .detail-card small {
+      display: block;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .detail-card strong {
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: var(--text);
+      display: block;
+      line-height: 1.35;
+    }
+
+    .detail-card p.sub {
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    .map-link {
+      display: inline-block;
+      margin-top:
