@@ -271,3 +271,364 @@
     .map-link:hover {
       opacity: 0.9;
     }
+
+    /* Gifts & RSVP Panels */
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.5rem;
+      text-align: left;
+      margin-top: 1.5rem;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, #fffdf9 0%, #faf2de 100%);
+      border: 1.5px solid var(--gold-soft);
+      border-radius: 16px;
+      padding: 1.6rem;
+    }
+
+    .panel h3 {
+      font-size: 1.3rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .panel p.desc {
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 1.1rem;
+    }
+
+    .input-group {
+      margin-bottom: 0.85rem;
+    }
+
+    .input-group label {
+      display: block;
+      font-family: system-ui, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .input-group input,
+    .input-group select {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid var(--gold-soft);
+      background: #ffffff;
+      font-family: system-ui, sans-serif;
+      font-size: 0.95rem;
+    }
+
+    .btn-whatsapp {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: #1f8b4c;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      font-family: system-ui, sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      text-decoration: none;
+    }
+
+    .btn-whatsapp:hover {
+      background: #19733e;
+    }
+
+    .acct-item {
+      background: #ffffff;
+      border: 1px solid var(--gold-soft);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.7rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .acct-item span.label {
+      font-family: system-ui, sans-serif;
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: block;
+    }
+
+    .acct-item strong {
+      font-size: 1.02rem;
+      color: var(--text);
+    }
+
+    .btn-copy {
+      background: var(--gold);
+      color: #ffffff;
+      border: none;
+      border-radius: 7px;
+      padding: 0.5rem 0.9rem;
+      font-family: system-ui, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-copy:hover {
+      opacity: 0.9;
+    }
+
+    /* Share Bar */
+    .share-box {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px dashed var(--gold-soft);
+    }
+
+    .btn-share {
+      display: inline-block;
+      background: transparent;
+      color: var(--gold);
+      border: 1.5px solid var(--gold);
+      border-radius: 999px;
+      padding: 0.65rem 1.5rem;
+      font-family: system-ui, sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .btn-share:hover {
+      background: var(--gold);
+      color: #ffffff;
+    }
+
+    footer {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= 1. ENTRANCE SCREEN ================= -->
+  <section id="entrance-screen" onclick="openInvitation()">
+    <div class="entrance-frame">
+      <p class="eyebrow">You Are Cordially Invited</p>
+      <h1 class="hero-names">Fortune &amp; Favor</h1>
+      <p style="color: var(--muted); font-size: 1.05rem;">Saturday, 28th of November &bull; White &amp; Gold</p>
+      <span class="enter-prompt">Tap to Open Invitation</span>
+    </div>
+  </section>
+
+  <!-- ================= 2. FULL INVITATION ================= -->
+  <main id="main-invitation">
+    <div class="card">
+      <div class="couple-header">
+        <p class="eyebrow">Together With Their Families</p>
+        <h1>Fortune &amp; Favor</h1>
+        <p>Joyfully invite you to witness and celebrate the beginning of their forever.</p>
+      </div>
+
+      <!-- LIVE COUNTDOWN -->
+      <div class="countdown-wrap" id="countdown">
+        <div class="time-box"><span class="num" id="cd-days">00</span><span class="unit">Days</span></div>
+        <div class="time-box"><span class="num" id="cd-hours">00</span><span class="unit">Hours</span></div>
+        <div class="time-box"><span class="num" id="cd-mins">00</span><span class="unit">Mins</span></div>
+        <div class="time-box"><span class="num" id="cd-secs">00</span><span class="unit">Secs</span></div>
+      </div>
+
+      <!-- TWO COUPLE PHOTOS: Replace src values below with your exact filenames in GitHub -->
+      <div class="photo-grid">
+        <img src="images/photo1.jpg" alt="Fortune and Favor" />
+        <img src="images/photo2.jpg" alt="Fortune and Favor" />
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- WEDDING DETAILS -->
+      <h2 class="section-title">Wedding Details</h2>
+      <div class="details-grid">
+        <div class="detail-card">
+          <small>Date</small>
+          <strong>Saturday, 28th of November, 2026</strong>
+        </div>
+        <div class="detail-card">
+          <small>Time</small>
+          <strong>11:00 AM Prompt</strong>
+        </div>
+        <div class="detail-card">
+          <small>Venue</small>
+          <strong>Sanyaolu Hall, Sanyaolu Hotel, Daleemo B/stop, Ogun State</strong>
+          <a class="map-link" href="https://www.google.com/maps/dir/?api=1&destination=Sanyaolu+Hotel+Daleemo+Bus+Stop+Ogun+State" target="_blank" rel="noopener noreferrer">
+            📍 Get Google Maps Directions
+          </a>
+        </div>
+        <div class="detail-card">
+          <small>Official Colors</small>
+          <strong>White &amp; Gold</strong>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- ORDER OF EVENTS -->
+      <h2 class="section-title">Order of Events</h2>
+      <div class="details-grid">
+        <div class="detail-card">
+          <small>11:00 AM</small>
+          <strong>Wedding Ceremony</strong>
+          <p class="sub">Sanyaolu Hall, Sanyaolu Hotel, Daleemo B/stop</p>
+        </div>
+        <div class="detail-card">
+          <small>Immediately After</small>
+          <strong>Reception &amp; Celebration</strong>
+          <p class="sub">Same Venue &bull; Music, Dining &amp; Toast</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- GIFTS FIRST, THEN RSVP -->
+      <div class="two-col">
+        <!-- 1. Gifts & Blessings -->
+        <div class="panel">
+          <h3>Gifts &amp; Blessings</h3>
+          <p class="desc">Unable to attend in person or wish to bless the couple? Kindly use the account below:</p>
+
+          <div class="acct-item">
+            <div>
+              <span class="label">Bank</span>
+              <strong>Opay</strong>
+            </div>
+          </div>
+
+          <div class="acct-item">
+            <div>
+              <span class="label">Account Name</span>
+              <strong>Fortune Felix Adikemere</strong>
+            </div>
+          </div>
+
+          <div class="acct-item">
+            <div>
+              <span class="label">Account Number</span>
+              <strong id="acct-number">8130984828</strong>
+            </div>
+            <button class="btn-copy" id="copy-btn" onclick="copyAccount()">Copy</button>
+          </div>
+        </div>
+
+        <!-- 2. Attending: WhatsApp RSVP -->
+        <div class="panel">
+          <h3>Will You Attend?</h3>
+          <p class="desc">Register your attendance so we can reserve a warm welcome for you.</p>
+
+          <div class="input-group">
+            <label for="guest-name">Your Full Name</label>
+            <input type="text" id="guest-name" placeholder="Enter your name" />
+          </div>
+
+          <div class="input-group">
+            <label for="guest-count">Number of Guests</label>
+            <select id="guest-count">
+              <option value="1 Person">1 Person</option>
+              <option value="2 People">2 People</option>
+              <option value="3 People">3 People</option>
+              <option value="Family">Family</option>
+            </select>
+          </div>
+
+          <button class="btn-whatsapp" onclick="sendWhatsAppRSVP()">Register via WhatsApp</button>
+        </div>
+      </div>
+
+      <!-- SHARE INVITATION -->
+      <div class="share-box">
+        <button class="btn-share" onclick="shareInvite()">📤 Share Invitation on WhatsApp</button>
+      </div>
+
+      <footer>
+        With love &amp; appreciation &mdash; <strong>Fortune &amp; Favor</strong>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    function openInvitation() {
+      const entrance = document.getElementById("entrance-screen");
+      const main = document.getElementById("main-invitation");
+      entrance.classList.add("fade-out");
+      setTimeout(() => {
+        entrance.style.display = "none";
+        main.style.display = "block";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }, 650);
+    }
+
+    // Countdown to Saturday, November 28, 2026 at 11:00 AM WAT (UTC+1)
+    const weddingDate = new Date("2026-11-28T11:00:00+01:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = weddingDate - now;
+
+      if (distance <= 0) {
+        document.getElementById("countdown").innerHTML =
+          '<strong style="color: var(--gold); font-size: 1.2rem;">Today is the Big Day! 🥂</strong>';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("cd-days").innerText = String(days).padStart(2, "0");
+      document.getElementById("cd-hours").innerText = String(hours).padStart(2, "0");
+      document.getElementById("cd-mins").innerText = String(mins).padStart(2, "0");
+      document.getElementById("cd-secs").innerText = String(secs).padStart(2, "0");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    function sendWhatsAppRSVP() {
+      const name = document.getElementById("guest-name").value.trim() || "A Guest";
+      const count = document.getElementById("guest-count").value;
+      const phone = "2348130984828";
+      const message = `Hello! I would love to RSVP for Fortune & Favor's Wedding on 28th November.\n\nName: ${name}\nAttending: ${count}`;
+      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank");
+    }
+
+    function copyAccount() {
+      const acct = document.getElementById("acct-number").innerText;
+      navigator.clipboard.writeText(acct);
+      const btn = document.getElementById("copy-btn");
+      btn.innerText = "Copied!";
+      setTimeout(() => {
+        btn.innerText = "Copy";
+      }, 2000);
+    }
+
+    function shareInvite() {
+      const siteUrl = window.location.href;
+      const shareText = `You are cordially invited to Fortune & Favor's Wedding on Saturday, 28th of November at Sanyaolu Hall, Sanyaolu Hotel, Daleemo B/stop, Ogun State (11:00 AM). Colors: White & Gold.\n\nView Invitation, Directions & RSVP here:\n${siteUrl}`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, "_blank");
+    }
+  </script>
+</body>
+</html>
