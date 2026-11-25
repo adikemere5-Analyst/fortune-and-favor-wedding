@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fortune &amp; Favour — Wedding Invitation</title>
+  <title>Fortune &amp; Favor — Wedding Invitation</title>
   <style>
     :root {
       --white: #ffffff;
@@ -143,7 +143,42 @@
       color: var(--muted);
       font-size: 1.08rem;
       max-width: 560px;
-      margin: 0 auto 1.8rem;
+      margin: 0 auto 1.5rem;
+    }
+
+    /* Countdown Timer */
+    .countdown-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin: 0 auto 2rem;
+    }
+
+    .time-box {
+      background: linear-gradient(180deg, #fffdf9 0%, #faf2de 100%);
+      border: 1.5px solid var(--gold-soft);
+      border-radius: 12px;
+      min-width: 74px;
+      padding: 0.7rem 0.6rem;
+    }
+
+    .time-box span.num {
+      display: block;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1.1;
+    }
+
+    .time-box span.unit {
+      display: block;
+      font-family: system-ui, sans-serif;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-top: 0.25rem;
     }
 
     /* Two-Photo Gallery */
@@ -174,7 +209,7 @@
       margin: 2rem 0;
     }
 
-    /* Event Details */
+    /* Event Details & Schedule */
     .section-title {
       font-size: 1.55rem;
       color: var(--gold);
@@ -211,6 +246,12 @@
       font-size: 1.05rem;
       color: var(--text);
       display: block;
+    }
+
+    .detail-card p.sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
     }
 
     .map-link {
@@ -347,8 +388,34 @@
       opacity: 0.9;
     }
 
+    /* Share Bar */
+    .share-box {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px dashed var(--gold-soft);
+    }
+
+    .btn-share {
+      display: inline-block;
+      background: transparent;
+      color: var(--gold);
+      border: 1.5px solid var(--gold);
+      border-radius: 999px;
+      padding: 0.65rem 1.5rem;
+      font-family: system-ui, sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .btn-share:hover {
+      background: var(--gold);
+      color: #ffffff;
+    }
+
     footer {
-      margin-top: 2.2rem;
+      margin-top: 1.5rem;
       font-size: 0.9rem;
       color: var(--muted);
     }
@@ -360,7 +427,7 @@
   <section id="entrance-screen" onclick="openInvitation()">
     <div class="entrance-frame">
       <p class="eyebrow">You Are Cordially Invited</p>
-      <h1 class="hero-names">Fortune &amp; Favour</h1>
+      <h1 class="hero-names">Fortune &amp; Favor</h1>
       <p style="color: var(--muted); font-size: 1.05rem;">Saturday, 28th of November &bull; White &amp; Gold</p>
       <span class="enter-prompt">Tap to Open Invitation</span>
     </div>
@@ -371,14 +438,22 @@
     <div class="card">
       <div class="couple-header">
         <p class="eyebrow">Together With Their Families</p>
-        <h1>Fortune &amp; Favour</h1>
+        <h1>Fortune &amp; Favor</h1>
         <p>Joyfully invite you to witness and celebrate the beginning of their forever.</p>
+      </div>
+
+      <!-- LIVE COUNTDOWN -->
+      <div class="countdown-wrap" id="countdown">
+        <div class="time-box"><span class="num" id="cd-days">00</span><span class="unit">Days</span></div>
+        <div class="time-box"><span class="num" id="cd-hours">00</span><span class="unit">Hours</span></div>
+        <div class="time-box"><span class="num" id="cd-mins">00</span><span class="unit">Mins</span></div>
+        <div class="time-box"><span class="num" id="cd-secs">00</span><span class="unit">Secs</span></div>
       </div>
 
       <!-- TWO COUPLE PHOTOS: Replace src values below with your exact filenames in GitHub -->
       <div class="photo-grid">
-        <img src="images/imagesphoto1.jpg.jpeg" alt="Fortune and Favour" />
-        <img src="images/imagesphoto2.jpg.jpeg" alt="Fortune and Favour" />
+        <img src="images/photo1.jpg" alt="Fortune and Favor" />
+        <img src="images/photo2.jpg" alt="Fortune and Favor" />
       </div>
 
       <div class="divider"></div>
@@ -404,6 +479,23 @@
         <div class="detail-card">
           <small>Official Colors</small>
           <strong>White &amp; Gold</strong>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- ORDER OF EVENTS -->
+      <h2 class="section-title">Order of Events</h2>
+      <div class="details-grid">
+        <div class="detail-card">
+          <small>11:00 AM</small>
+          <strong>Wedding Ceremony</strong>
+          <p class="sub">Sanyaolu Hall, Sanyaolu Hotel, Daleemo B/stop</p>
+        </div>
+        <div class="detail-card">
+          <small>Immediately After</small>
+          <strong>Reception &amp; Celebration</strong>
+          <p class="sub">Same Venue &bull; Music, Dining &amp; Toast</p>
         </div>
       </div>
 
@@ -463,8 +555,13 @@
         </div>
       </div>
 
+      <!-- SHARE INVITATION -->
+      <div class="share-box">
+        <button class="btn-share" onclick="shareInvite()">📤 Share Invitation on WhatsApp</button>
+      </div>
+
       <footer>
-        With love &amp; appreciation &mdash; <strong>Fortune &amp; Favour</strong>
+        With love &amp; appreciation &mdash; <strong>Fortune &amp; Favor</strong>
       </footer>
     </div>
   </main>
@@ -481,11 +578,38 @@
       }, 650);
     }
 
+    // Countdown to Saturday, November 28, 2026 at 11:00 AM WAT (UTC+1)
+    const weddingDate = new Date("2026-11-28T11:00:00+01:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = weddingDate - now;
+
+      if (distance <= 0) {
+        document.getElementById("countdown").innerHTML =
+          '<strong style="color: var(--gold); font-size: 1.2rem;">Today is the Big Day! 🥂</strong>';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("cd-days").innerText = String(days).padStart(2, "0");
+      document.getElementById("cd-hours").innerText = String(hours).padStart(2, "0");
+      document.getElementById("cd-mins").innerText = String(mins).padStart(2, "0");
+      document.getElementById("cd-secs").innerText = String(secs).padStart(2, "0");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
     function sendWhatsAppRSVP() {
       const name = document.getElementById("guest-name").value.trim() || "A Guest";
       const count = document.getElementById("guest-count").value;
       const phone = "2348130984828";
-      const message = `Hello! I would love to RSVP for Fortune & Favour's Wedding on 28th November.\n\nName: ${name}\nAttending: ${count}`;
+      const message = `Hello! I would love to RSVP for Fortune & Favor's Wedding on 28th November.\n\nName: ${name}\nAttending: ${count}`;
       const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
       window.open(url, "_blank");
     }
@@ -498,6 +622,12 @@
       setTimeout(() => {
         btn.innerText = "Copy";
       }, 2000);
+    }
+
+    function shareInvite() {
+      const siteUrl = window.location.href;
+      const shareText = `You are cordially invited to Fortune & Favor's Wedding on Saturday, 28th of November at Sanyaolu Hall, Sanyaolu Hotel, Daleemo B/stop, Ogun State (11:00 AM). Colors: White & Gold.\n\nView Invitation, Directions & RSVP here:\n${siteUrl}`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, "_blank");
     }
   </script>
 </body>
