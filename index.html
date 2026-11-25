@@ -146,21 +146,21 @@
       margin: 0 auto 1.8rem;
     }
 
-    /* Photo Gallery */
+    /* Two-Photo Gallery */
     .photo-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
       margin-bottom: 2rem;
     }
 
     .photo-grid img {
       width: 100%;
-      height: 300px;
+      height: 340px;
       object-fit: cover;
-      border-radius: 14px;
+      border-radius: 16px;
       border: 2px solid var(--gold-soft);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.09);
       transition: transform 0.3s ease;
     }
 
@@ -210,6 +210,25 @@
     .detail-card strong {
       font-size: 1.05rem;
       color: var(--text);
+      display: block;
+    }
+
+    .map-link {
+      display: inline-block;
+      margin-top: 0.65rem;
+      padding: 0.45rem 0.9rem;
+      background: var(--gold);
+      color: #ffffff;
+      text-decoration: none;
+      font-family: system-ui, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 7px;
+      transition: opacity 0.2s ease;
+    }
+
+    .map-link:hover {
+      opacity: 0.9;
     }
 
     /* Gifts & RSVP Panels */
@@ -356,11 +375,10 @@
         <p>Joyfully invite you to witness and celebrate the beginning of their forever.</p>
       </div>
 
-      <!-- COUPLE PHOTOS: Replace the src values below with the exact filenames in your repo -->
+      <!-- TWO COUPLE PHOTOS: Replace src values below with your exact filenames in GitHub -->
       <div class="photo-grid">
         <img src="images/photo1.jpg" alt="Fortune and Favor" />
         <img src="images/photo2.jpg" alt="Fortune and Favor" />
-        <img src="images/photo3.jpg" alt="Fortune and Favor" />
       </div>
 
       <div class="divider"></div>
@@ -379,6 +397,9 @@
         <div class="detail-card">
           <small>Venue</small>
           <strong>Sanyaolu Hall, Sanyaolu Hotel, Daleemo B/stop, Ogun State</strong>
+          <a class="map-link" href="https://www.google.com/maps/dir/?api=1&destination=Sanyaolu+Hotel+Daleemo+Bus+Stop+Ogun+State" target="_blank" rel="noopener noreferrer">
+            📍 Get Google Maps Directions
+          </a>
         </div>
         <div class="detail-card">
           <small>Official Colors</small>
