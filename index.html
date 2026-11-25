@@ -3,17 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fortune &amp; Favor — Wedding Invitation</title>
+  <title>Favour &amp; Fortune — Wedding Invitation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --white: #ffffff;
-      --ivory: #fffdf8;
-      --cream: #f9f2e2;
+      --ivory: #fffdf9;
+      --champagne: #fbf5e6;
+      --gold-deep: #7a5400;
       --gold: #b8860b;
       --gold-bright: #d4af37;
-      --gold-soft: #e8d08c;
-      --text: #241e12;
-      --muted: #66593e;
+      --gold-soft: #e6cf8b;
+      --gold-tint: rgba(212, 175, 55, 0.14);
+      --text: #231d11;
+      --muted: #6b5d42;
     }
 
     * {
@@ -23,336 +28,497 @@
     }
 
     body {
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: "Cormorant Garamond", Georgia, serif;
       color: var(--text);
       min-height: 100vh;
       background:
-        radial-gradient(circle at top left, rgba(212, 175, 55, 0.22), transparent 45%),
-        radial-gradient(circle at bottom right, rgba(184, 134, 11, 0.25), transparent 50%),
-        linear-gradient(135deg, #ffffff 0%, #fcf6e8 48%, #f3e2b8 100%);
+        radial-gradient(circle at 12% 15%, rgba(212, 175, 55, 0.24) 0%, transparent 42%),
+        radial-gradient(circle at 88% 82%, rgba(184, 134, 11, 0.26) 0%, transparent 48%),
+        radial-gradient(circle at 50% 50%, #ffffff 0%, #fcf6e8 65%, #f4e4bd 100%);
       overflow-x: hidden;
     }
 
-    /* ================= SPLASH / ENTRANCE SCREEN ================= */
+    .shimmer-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(2.5px 2.5px at 16% 22%, rgba(212, 175, 55, 0.6), transparent),
+        radial-gradient(3px 3px at 78% 16%, rgba(184, 134, 11, 0.45), transparent),
+        radial-gradient(2px 2px at 30% 80%, rgba(212, 175, 55, 0.55), transparent),
+        radial-gradient(3px 3px at 86% 68%, rgba(212, 175, 55, 0.4), transparent),
+        radial-gradient(2px 2px at 50% 38%, rgba(184, 134, 11, 0.45), transparent);
+      z-index: 0;
+    }
+
+    /* ================= 1. ROYAL WAX-SEALED ENVELOPE ENTRANCE ================= */
     #entrance-screen {
-      min-height: 100vh;
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      background:
+        radial-gradient(circle at 50% 35%, #ffffff 0%, #fbf3df 58%, #edd69c 100%);
+      cursor: pointer;
+      perspective: 1400px;
+      transition: opacity 0.8s ease 0.55s, visibility 0.8s ease 0.55s;
+    }
+
+    #entrance-screen.opened {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .envelope-stage {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      border-radius: 26px;
+      padding: 9px;
+      background: linear-gradient(135deg, #f5e3b0 0%, #ffffff 48%, #d8b254 100%);
+      box-shadow: 0 32px 80px rgba(122, 84, 0, 0.25);
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    #entrance-screen:not(.opened) .envelope-stage:hover {
+      transform: translateY(-6px) scale(1.01);
+    }
+
+    #entrance-screen.opened .envelope-stage {
+      transform: scale(1.08);
+    }
+
+    .envelope-body {
+      position: relative;
+      background: linear-gradient(180deg, #fffefb 0%, #fcf5e3 100%);
+      border: 1.5px solid var(--gold-soft);
+      border-radius: 19px;
+      padding: 4.5rem 2rem 3.2rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .corner {
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      border-color: var(--gold-bright);
+      border-style: solid;
+      opacity: 0.75;
+      pointer-events: none;
+    }
+    .corner.tl { top: 14px; left: 14px; border-width: 2px 0 0 2px; border-top-left-radius: 10px; }
+    .corner.tr { top: 14px; right: 14px; border-width: 2px 2px 0 0; border-top-right-radius: 10px; }
+    .corner.bl { bottom: 14px; left: 14px; border-width: 0 0 2px 2px; border-bottom-left-radius: 10px; }
+    .corner.br { bottom: 14px; right: 14px; border-width: 0 2px 2px 0; border-bottom-right-radius: 10px; }
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 155px;
+      background: linear-gradient(180deg, #f6e6bc 0%, #fffdf8 100%);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      border-bottom: 2px solid var(--gold-bright);
+      transform-origin: top center;
+      transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 2;
+      box-shadow: 0 10px 25px rgba(184, 134, 11, 0.15);
+    }
+
+    #entrance-screen.opened .envelope-flap {
+      transform: rotateX(180deg);
+    }
+
+    .envelope-crease {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 156px;
+      background: linear-gradient(180deg, rgba(212, 175, 55, 0.45), transparent);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .wax-seal {
+      position: relative;
+      z-index: 4;
+      width: 96px;
+      height: 96px;
+      margin: 2.2rem auto 1.4rem;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 28%, #f8e49c 0%, #d4af37 42%, #9a6e06 88%, #735000 100%);
+      border: 3px solid #f7e6ad;
+      box-shadow:
+        0 12px 28px rgba(122, 84, 0, 0.38),
+        inset 0 2px 6px rgba(255, 255, 255, 0.65),
+        inset 0 -4px 8px rgba(92, 62, 0, 0.5);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      padding: 2rem;
-      cursor: pointer;
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      color: #fffdf7;
+      transition: transform 0.45s ease, opacity 0.45s ease;
+      animation: sealGlow 2.6s ease-in-out infinite;
     }
 
-    #entrance-screen.fade-out {
+    .wax-seal::after {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 253, 245, 0.75);
+    }
+
+    .wax-seal span.initials {
+      font-family: "Cinzel", serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-shadow: 0 1px 3px rgba(85, 57, 0, 0.5);
+    }
+
+    .wax-seal span.tap-word {
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 2px;
+      opacity: 0.95;
+    }
+
+    #entrance-screen.opened .wax-seal {
+      transform: scale(0.4) rotate(25deg);
       opacity: 0;
-      transform: scale(1.03);
-      pointer-events: none;
     }
 
-    .entrance-frame {
-      border: 2px solid var(--gold-soft);
-      background: rgba(255, 255, 255, 0.78);
-      backdrop-filter: blur(6px);
-      padding: 3.5rem 2.5rem;
-      border-radius: 24px;
-      max-width: 760px;
-      width: 100%;
-      box-shadow: 0 20px 50px rgba(184, 134, 11, 0.18);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .entrance-frame:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 26px 60px rgba(184, 134, 11, 0.26);
+    @keyframes sealGlow {
+      0%, 100% {
+        box-shadow: 0 12px 28px rgba(122, 84, 0, 0.35), 0 0 0 0 rgba(212, 175, 55, 0.45);
+      }
+      50% {
+        box-shadow: 0 16px 34px rgba(122, 84, 0, 0.45), 0 0 0 12px rgba(212, 175, 55, 0);
+      }
     }
 
     .eyebrow {
-      font-family: system-ui, -apple-system, sans-serif;
-      font-size: 0.82rem;
-      letter-spacing: 0.25em;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.74rem;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 1rem;
+      margin-bottom: 0.65rem;
       font-weight: 600;
     }
 
     .hero-names {
-      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-family: "Cinzel", Georgia, serif;
+      font-size: clamp(2.5rem, 7.5vw, 4.7rem);
       font-weight: 700;
-      line-height: 1.08;
-      background: linear-gradient(135deg, #8c6200 0%, #d4af37 50%, #9e7208 100%);
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+      background: linear-gradient(135deg, #755000 0%, #d4af37 48%, #8c6200 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 1.2rem;
+      margin-bottom: 0.65rem;
     }
 
-    .enter-prompt {
+    .hero-date {
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+    }
+
+    .open-pill {
       display: inline-block;
-      margin-top: 1.25rem;
-      padding: 0.85rem 2rem;
+      padding: 0.7rem 1.8rem;
       border-radius: 999px;
-      background: linear-gradient(135deg, #c6971c, #a47606);
-      color: #ffffff;
-      font-family: system-ui, -apple-system, sans-serif;
-      font-size: 0.92rem;
+      border: 1px solid var(--gold-bright);
+      background: rgba(255, 255, 255, 0.85);
+      color: var(--gold-deep);
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.75rem;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      box-shadow: 0 8px 20px rgba(184, 134, 11, 0.3);
-      animation: pulse 2s infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.04); }
-    }
-
-    /* ================= MAIN INVITATION PAGE ================= */
+    /* ================= 2. MAIN INVITATION PAGE ================= */
     #main-invitation {
+      position: relative;
+      z-index: 1;
       display: none;
-      max-width: 820px;
+      max-width: 860px;
       margin: 0 auto;
-      padding: 2.5rem 1.25rem 4rem;
-      animation: revealPage 0.9s ease forwards;
+      padding: 2.5rem 1.15rem 4.5rem;
+      animation: revealPage 1s ease forwards;
     }
 
     @keyframes revealPage {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(24px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
+    .main-foil-wrap {
+      padding: 8px;
+      border-radius: 26px;
+      background: linear-gradient(160deg, #ecd595 0%, #ffffff 45%, #e2c26d 100%);
+      box-shadow: 0 24px 60px rgba(140, 98, 0, 0.16);
+    }
+
     .card {
-      background: rgba(255, 255, 255, 0.92);
-      border: 2px solid var(--gold-soft);
-      border-radius: 22px;
-      padding: 2.5rem 2rem;
-      box-shadow: 0 18px 45px rgba(184, 134, 11, 0.14);
+      background: rgba(255, 253, 249, 0.97);
+      border: 1px solid var(--gold-soft);
+      border-radius: 20px;
+      padding: 3rem 2rem;
       text-align: center;
     }
 
-    .couple-header h1 {
-      font-size: clamp(2.2rem, 5vw, 3.4rem);
+    .monogram-badge {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 1.1rem;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold-bright);
+      background: radial-gradient(circle, #ffffff 30%, #fbf3df 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Cinzel", serif;
+      font-size: 1.3rem;
+      font-weight: 600;
       color: var(--gold);
-      margin-bottom: 0.4rem;
+      box-shadow: 0 6px 20px rgba(184, 134, 11, 0.16);
     }
 
-    .couple-header p {
+    .couple-header h1 {
+      font-family: "Cinzel", Georgia, serif;
+      font-size: clamp(2.1rem, 5vw, 3.3rem);
+      font-weight: 700;
+      color: var(--gold-deep);
+      letter-spacing: 0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .couple-header p.verse {
       color: var(--muted);
-      font-size: 1.08rem;
+      font-size: 1.2rem;
+      font-style: italic;
       max-width: 560px;
-      margin: 0 auto 1.5rem;
+      margin: 0 auto 1.75rem;
+      line-height: 1.55;
+    }
+
+    .ornament-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.9rem;
+      margin: 2.2rem 0;
+      color: var(--gold-bright);
+    }
+
+    .ornament-divider::before,
+    .ornament-divider::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      max-width: 180px;
+      background: linear-gradient(90deg, transparent, var(--gold-bright));
+    }
+
+    .ornament-divider::after {
+      background: linear-gradient(90deg, var(--gold-bright), transparent);
     }
 
     /* Countdown Timer */
     .countdown-wrap {
       display: flex;
       justify-content: center;
-      gap: 0.75rem;
+      gap: 0.85rem;
       flex-wrap: wrap;
-      margin: 0 auto 2rem;
+      margin: 0 auto 2.2rem;
     }
 
     .time-box {
-      background: linear-gradient(180deg, #fffdf9 0%, #faf2de 100%);
+      background: linear-gradient(180deg, #ffffff 0%, #faf1db 100%);
       border: 1.5px solid var(--gold-soft);
-      border-radius: 12px;
-      min-width: 74px;
-      padding: 0.7rem 0.6rem;
+      border-radius: 14px;
+      min-width: 78px;
+      padding: 0.8rem 0.65rem;
+      box-shadow: 0 6px 16px rgba(184, 134, 11, 0.08);
     }
 
     .time-box span.num {
       display: block;
+      font-family: "Cinzel", serif;
       font-size: 1.55rem;
       font-weight: 700;
-      color: var(--gold);
+      color: var(--gold-deep);
       line-height: 1.1;
     }
 
     .time-box span.unit {
       display: block;
-      font-family: system-ui, sans-serif;
-      font-size: 0.68rem;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.65rem;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.14em;
       color: var(--muted);
-      margin-top: 0.25rem;
+      margin-top: 0.3rem;
+      font-weight: 600;
     }
 
-    /* Two-Photo Gallery */
+    /* Framed Two-Photo Gallery (No Cropping) */
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 2rem;
-    }
-
-    .photo-grid img {
-      width: 100%;
-      height: 340px;
-      object-fit: cover;
-      border-radius: 16px;
-      border: 2px solid var(--gold-soft);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.09);
-      transition: transform 0.3s ease;
-    }
-
-    .photo-grid img:hover {
-      transform: scale(1.02);
-    }
-
-    .divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold-bright), transparent);
-      margin: 2rem 0;
-    }
-
-    /* Event Details & Schedule */
-    .section-title {
-      font-size: 1.55rem;
-      color: var(--gold);
+      gap: 1.5rem;
+      align-items: center;
       margin-bottom: 1rem;
+    }
+
+    .photo-frame {
+      background: #ffffff;
+      padding: 10px 10px 16px;
+      border-radius: 16px;
+      border: 1.5px solid var(--gold-soft);
+      box-shadow: 0 14px 32px rgba(140, 98, 0, 0.12);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .photo-frame:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 18px 38px rgba(140, 98, 0, 0.18);
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .section-title {
+      font-family: "Cinzel", Georgia, serif;
+      font-size: 1.45rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--gold-deep);
+      margin-bottom: 1.2rem;
     }
 
     .details-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.1rem;
       text-align: left;
-      margin-bottom: 1.5rem;
     }
 
     .detail-card {
-      background: var(--ivory);
+      background: linear-gradient(180deg, #ffffff 0%, #fcf7eb 100%);
       border: 1px solid var(--gold-soft);
+      border-left: 4px solid var(--gold-bright);
       border-radius: 14px;
-      padding: 1.1rem 1.2rem;
+      padding: 1.2rem 1.3rem;
+      box-shadow: 0 6px 18px rgba(184, 134, 11, 0.06);
     }
 
     .detail-card small {
       display: block;
-      font-family: system-ui, sans-serif;
-      font-size: 0.74rem;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.15em;
       color: var(--gold);
-      font-weight: 700;
-      margin-bottom: 0.25rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
     }
 
     .detail-card strong {
-      font-size: 1.05rem;
+      font-size: 1.18rem;
+      font-weight: 700;
       color: var(--text);
       display: block;
+      line-height: 1.35;
     }
 
     .detail-card p.sub {
-      font-size: 0.9rem;
+      font-size: 1rem;
+      font-style: italic;
       color: var(--muted);
-      margin-top: 0.25rem;
+      margin-top: 0.3rem;
     }
 
     .map-link {
       display: inline-block;
-      margin-top: 0.65rem;
-      padding: 0.45rem 0.9rem;
-      background: var(--gold);
+      margin-top: 0.75rem;
+      padding: 0.55rem 1.05rem;
+      background: linear-gradient(135deg, #c6971c, #9e7105);
       color: #ffffff;
       text-decoration: none;
-      font-family: system-ui, sans-serif;
-      font-size: 0.8rem;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.76rem;
       font-weight: 600;
-      border-radius: 7px;
-      transition: opacity 0.2s ease;
+      letter-spacing: 0.05em;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(158, 113, 5, 0.22);
+      transition: transform 0.2s ease, opacity 0.2s ease;
     }
 
     .map-link:hover {
-      opacity: 0.9;
+      transform: translateY(-1px);
+      opacity: 0.94;
     }
 
-    /* Gifts & RSVP Panels */
     .two-col {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(295px, 1fr));
       gap: 1.5rem;
       text-align: left;
-      margin-top: 1.5rem;
+      margin-top: 0.5rem;
     }
 
     .panel {
-      background: linear-gradient(180deg, #fffdf9 0%, #faf2de 100%);
+      background: linear-gradient(180deg, #ffffff 0%, #faf1dc 100%);
       border: 1.5px solid var(--gold-soft);
-      border-radius: 16px;
-      padding: 1.6rem;
+      border-radius: 18px;
+      padding: 1.8rem 1.5rem;
+      box-shadow: 0 10px 26px rgba(184, 134, 11, 0.08);
     }
 
     .panel h3 {
-      font-size: 1.3rem;
-      color: var(--gold);
-      margin-bottom: 0.5rem;
+      font-family: "Cinzel", Georgia, serif;
+      font-size: 1.25rem;
+      color: var(--gold-deep);
+      margin-bottom: 0.55rem;
       text-align: center;
     }
 
     .panel p.desc {
-      font-size: 0.95rem;
+      font-size: 1.05rem;
+      font-style: italic;
       color: var(--muted);
       text-align: center;
-      margin-bottom: 1.1rem;
-    }
-
-    .input-group {
-      margin-bottom: 0.85rem;
-    }
-
-    .input-group label {
-      display: block;
-      font-family: system-ui, sans-serif;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--muted);
-      margin-bottom: 0.3rem;
-    }
-
-    .input-group input,
-    .input-group select {
-      width: 100%;
-      padding: 0.65rem 0.85rem;
-      border-radius: 8px;
-      border: 1px solid var(--gold-soft);
-      background: #ffffff;
-      font-family: system-ui, sans-serif;
-      font-size: 0.95rem;
-    }
-
-    .btn-whatsapp {
-      display: block;
-      width: 100%;
-      text-align: center;
-      background: #1f8b4c;
-      color: #ffffff;
-      border: none;
-      border-radius: 10px;
-      padding: 0.85rem 1rem;
-      font-family: system-ui, sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 0.5rem;
-      text-decoration: none;
-    }
-
-    .btn-whatsapp:hover {
-      background: #19733e;
+      margin-bottom: 1.2rem;
+      line-height: 1.45;
     }
 
     .acct-item {
       background: #ffffff;
       border: 1px solid var(--gold-soft);
-      border-radius: 10px;
-      padding: 0.75rem 1rem;
-      margin-bottom: 0.7rem;
+      border-radius: 11px;
+      padding: 0.8rem 1rem;
+      margin-bottom: 0.75rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -361,208 +527,281 @@
     }
 
     .acct-item span.label {
-      font-family: system-ui, sans-serif;
-      font-size: 0.78rem;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
       color: var(--muted);
       display: block;
+      margin-bottom: 0.15rem;
     }
 
     .acct-item strong {
-      font-size: 1.02rem;
+      font-size: 1.15rem;
       color: var(--text);
     }
 
     .btn-copy {
-      background: var(--gold);
+      background: linear-gradient(135deg, #c6971c, #9e7105);
       color: #ffffff;
       border: none;
       border-radius: 7px;
-      padding: 0.5rem 0.9rem;
-      font-family: system-ui, sans-serif;
-      font-size: 0.82rem;
+      padding: 0.55rem 1rem;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.78rem;
       font-weight: 600;
+      letter-spacing: 0.05em;
       cursor: pointer;
     }
 
     .btn-copy:hover {
-      opacity: 0.9;
+      opacity: 0.92;
     }
 
-    /* Share Bar */
-    .share-box {
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-      border-top: 1px dashed var(--gold-soft);
+    .input-group {
+      margin-bottom: 0.9rem;
     }
 
-    .btn-share {
-      display: inline-block;
-      background: transparent;
-      color: var(--gold);
-      border: 1.5px solid var(--gold);
-      border-radius: 999px;
-      padding: 0.65rem 1.5rem;
-      font-family: system-ui, sans-serif;
-      font-size: 0.88rem;
+    .input-group label {
+      display: block;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
       font-weight: 600;
-      cursor: pointer;
-      transition: all 0.25s ease;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
     }
 
-    .btn-share:hover {
-      background: var(--gold);
+    .input-group input,
+    .input-group select {
+      width: 100%;
+      padding: 0.72rem 0.9rem;
+      border-radius: 9px;
+      border: 1px solid var(--gold-soft);
+      background: #ffffff;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+      outline: none;
+      border-color: var(--gold-bright);
+      box-shadow: 0 0 0 3px var(--gold-tint);
+    }
+
+    .btn-whatsapp {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: linear-gradient(135deg, #219653, #176f3c);
       color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.86rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 0.6rem;
+      box-shadow: 0 8px 18px rgba(31, 139, 76, 0.24);
+    }
+
+    .btn-whatsapp:hover {
+      opacity: 0.94;
     }
 
     footer {
-      margin-top: 1.5rem;
-      font-size: 0.9rem;
+      margin-top: 2.5rem;
+      font-size: 1.08rem;
+      font-style: italic;
       color: var(--muted);
+    }
+
+    footer strong {
+      font-family: "Cinzel", serif;
+      font-style: normal;
+      color: var(--gold-deep);
+    }
+
+    @media (max-width: 540px) {
+      .card {
+        padding: 2rem 1.15rem;
+      }
+      .envelope-body {
+        padding: 4rem 1.2rem 2.5rem;
+      }
+      .envelope-flap, .envelope-crease {
+        height: 125px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- ================= 1. ENTRANCE SCREEN ================= -->
+  <div class="shimmer-bg"></div>
+
+  <!-- ================= 1. ROYAL WAX-SEALED ENVELOPE ENTRANCE ================= -->
   <section id="entrance-screen" onclick="openInvitation()">
-    <div class="entrance-frame">
-      <p class="eyebrow">You Are Cordially Invited</p>
-      <h1 class="hero-names">Fortune &amp; Favor</h1>
-      <p style="color: var(--muted); font-size: 1.05rem;">Saturday, 28th of November &bull; White &amp; Gold</p>
-      <span class="enter-prompt">Tap to Open Invitation</span>
+    <div class="envelope-stage">
+      <div class="envelope-body">
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+
+        <div class="envelope-crease"></div>
+        <div class="envelope-flap"></div>
+
+        <div class="wax-seal">
+          <span class="initials">F&amp;F</span>
+          <span class="tap-word">Seal</span>
+        </div>
+
+        <p class="eyebrow">Official Wedding Invitation</p>
+        <h1 class="hero-names">Favour &amp; Fortune</h1>
+        <p class="hero-date">Saturday, 28th of November &bull; White &amp; Gold</p>
+        <span class="open-pill">Tap Seal to Open</span>
+      </div>
     </div>
   </section>
 
   <!-- ================= 2. FULL INVITATION ================= -->
   <main id="main-invitation">
-    <div class="card">
-      <div class="couple-header">
-        <p class="eyebrow">Together With Their Families</p>
-        <h1>Fortune &amp; Favor</h1>
-        <p>Joyfully invite you to witness and celebrate the beginning of their forever.</p>
-      </div>
-
-      <!-- LIVE COUNTDOWN -->
-      <div class="countdown-wrap" id="countdown">
-        <div class="time-box"><span class="num" id="cd-days">00</span><span class="unit">Days</span></div>
-        <div class="time-box"><span class="num" id="cd-hours">00</span><span class="unit">Hours</span></div>
-        <div class="time-box"><span class="num" id="cd-mins">00</span><span class="unit">Mins</span></div>
-        <div class="time-box"><span class="num" id="cd-secs">00</span><span class="unit">Secs</span></div>
-      </div>
-
-      <!-- TWO COUPLE PHOTOS: Replace src values below with your exact filenames in GitHub -->
-      <div class="photo-grid">
-        <img src="images/photo1.jpg" alt="Fortune and Favor" />
-        <img src="images/photo2.jpg" alt="Fortune and Favor" />
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- WEDDING DETAILS -->
-      <h2 class="section-title">Wedding Details</h2>
-      <div class="details-grid">
-        <div class="detail-card">
-          <small>Date</small>
-          <strong>Saturday, 28th of November, 2026</strong>
+    <div class="main-foil-wrap">
+      <div class="card">
+        <div class="couple-header">
+          <div class="monogram-badge">F &amp; F</div>
+          <p class="eyebrow">Together With Their Families</p>
+          <h1>Favour &amp; Fortune</h1>
+          <p class="verse">Joyfully invite you to witness and celebrate the beginning of their forever.</p>
         </div>
-        <div class="detail-card">
-          <small>Time</small>
-          <strong>11:00 AM Prompt</strong>
-        </div>
-        <div class="detail-card">
-          <small>Venue</small>
-          <strong>Sanyaolu Hall, Sanyaolu Hotel, Daleemo B/stop, Ogun State</strong>
-          <a class="map-link" href="https://www.google.com/maps/dir/?api=1&destination=Sanyaolu+Hotel+Daleemo+Bus+Stop+Ogun+State" target="_blank" rel="noopener noreferrer">
-            📍 Get Google Maps Directions
-          </a>
-        </div>
-        <div class="detail-card">
-          <small>Official Colors</small>
-          <strong>White &amp; Gold</strong>
-        </div>
-      </div>
 
-      <div class="divider"></div>
-
-      <!-- ORDER OF EVENTS -->
-      <h2 class="section-title">Order of Events</h2>
-      <div class="details-grid">
-        <div class="detail-card">
-          <small>11:00 AM</small>
-          <strong>Wedding Ceremony</strong>
-          <p class="sub">Sanyaolu Hall, Sanyaolu Hotel, Daleemo B/stop</p>
+        <!-- LIVE COUNTDOWN -->
+        <div class="countdown-wrap" id="countdown">
+          <div class="time-box"><span class="num" id="cd-days">00</span><span class="unit">Days</span></div>
+          <div class="time-box"><span class="num" id="cd-hours">00</span><span class="unit">Hours</span></div>
+          <div class="time-box"><span class="num" id="cd-mins">00</span><span class="unit">Mins</span></div>
+          <div class="time-box"><span class="num" id="cd-secs">00</span><span class="unit">Secs</span></div>
         </div>
-        <div class="detail-card">
-          <small>Immediately After</small>
-          <strong>Reception &amp; Celebration</strong>
-          <p class="sub">Same Venue &bull; Music, Dining &amp; Toast</p>
+
+        <!-- TWO COUPLE PHOTOS: Keep your exact filenames from GitHub here -->
+        <div class="photo-grid">
+          <div class="photo-frame">
+            <img src="images/photo1.jpg" alt="Favour and Fortune" />
+          </div>
+          <div class="photo-frame">
+            <img src="images/photo2.jpg" alt="Favour and Fortune" />
+          </div>
         </div>
-      </div>
 
-      <div class="divider"></div>
+        <div class="ornament-divider">&#10022;</div>
 
-      <!-- GIFTS FIRST, THEN RSVP -->
-      <div class="two-col">
-        <!-- 1. Gifts & Blessings -->
-        <div class="panel">
-          <h3>Gifts &amp; Blessings</h3>
-          <p class="desc">Unable to attend in person or wish to bless the couple? Kindly use the account below:</p>
+        <!-- WEDDING DETAILS -->
+        <h2 class="section-title">Wedding Details</h2>
+        <div class="details-grid">
+          <div class="detail-card">
+            <small>Date</small>
+            <strong>Saturday, 28th of November, 2026</strong>
+          </div>
+          <div class="detail-card">
+            <small>Time</small>
+            <strong>11:00 AM Prompt</strong>
+          </div>
+          <div class="detail-card">
+            <small>Venue</small>
+            <strong>Sanyaolu Hall, Sanyaolu Hotel, Daleemo B/stop, Ogun State</strong>
+            <a class="map-link" href="https://www.google.com/maps/dir/?api=1&destination=Sanyaolu+Hotel+Daleemo+Bus+Stop+Ogun+State" target="_blank" rel="noopener noreferrer">
+              📍 Get Google Maps Directions
+            </a>
+          </div>
+          <div class="detail-card">
+            <small>Official Colors</small>
+            <strong>White &amp; Gold</strong>
+          </div>
+        </div>
 
-          <div class="acct-item">
-            <div>
-              <span class="label">Bank</span>
-              <strong>Opay</strong>
+        <div class="ornament-divider">&#10022;</div>
+
+        <!-- ORDER OF EVENTS -->
+        <h2 class="section-title">Order of Events</h2>
+        <div class="details-grid">
+          <div class="detail-card">
+            <small>11:00 AM</small>
+            <strong>Wedding Ceremony</strong>
+            <p class="sub">Sanyaolu Hall, Sanyaolu Hotel, Daleemo B/stop</p>
+          </div>
+          <div class="detail-card">
+            <small>Immediately After</small>
+            <strong>Reception &amp; Celebration</strong>
+            <p class="sub">Same Venue &bull; Music, Dining &amp; Toast</p>
+          </div>
+        </div>
+
+        <div class="ornament-divider">&#10022;</div>
+
+        <!-- GIFTS FIRST, THEN RSVP -->
+        <div class="two-col">
+          <!-- 1. Gifts & Blessings -->
+          <div class="panel">
+            <h3>Gifts &amp; Blessings</h3>
+            <p class="desc">Unable to attend in person or wish to bless the couple? Kindly use the account below:</p>
+
+            <div class="acct-item">
+              <div>
+                <span class="label">Bank</span>
+                <strong>Opay</strong>
+              </div>
+            </div>
+
+            <div class="acct-item">
+              <div>
+                <span class="label">Account Name</span>
+                <strong>Fortune Felix Adikemere</strong>
+              </div>
+            </div>
+
+            <div class="acct-item">
+              <div>
+                <span class="label">Account Number</span>
+                <strong id="acct-number">8130984828</strong>
+              </div>
+              <button class="btn-copy" id="copy-btn" onclick="copyAccount()">Copy</button>
             </div>
           </div>
 
-          <div class="acct-item">
-            <div>
-              <span class="label">Account Name</span>
-              <strong>Fortune Felix Adikemere</strong>
-            </div>
-          </div>
+          <!-- 2. Attending: WhatsApp RSVP -->
+          <div class="panel">
+            <h3>Will You Attend?</h3>
+            <p class="desc">Register your attendance so we can reserve a warm welcome for you.</p>
 
-          <div class="acct-item">
-            <div>
-              <span class="label">Account Number</span>
-              <strong id="acct-number">8130984828</strong>
+            <div class="input-group">
+              <label for="guest-name">Your Full Name</label>
+              <input type="text" id="guest-name" placeholder="Enter your name" />
             </div>
-            <button class="btn-copy" id="copy-btn" onclick="copyAccount()">Copy</button>
+
+            <div class="input-group">
+              <label for="guest-count">Number of Guests</label>
+              <select id="guest-count">
+                <option value="1 Person">1 Person</option>
+                <option value="2 People">2 People</option>
+                <option value="3 People">3 People</option>
+                <option value="Family">Family</option>
+              </select>
+            </div>
+
+            <button class="btn-whatsapp" onclick="sendWhatsAppRSVP()">Register via WhatsApp</button>
           </div>
         </div>
 
-        <!-- 2. Attending: WhatsApp RSVP -->
-        <div class="panel">
-          <h3>Will You Attend?</h3>
-          <p class="desc">Register your attendance so we can reserve a warm welcome for you.</p>
-
-          <div class="input-group">
-            <label for="guest-name">Your Full Name</label>
-            <input type="text" id="guest-name" placeholder="Enter your name" />
-          </div>
-
-          <div class="input-group">
-            <label for="guest-count">Number of Guests</label>
-            <select id="guest-count">
-              <option value="1 Person">1 Person</option>
-              <option value="2 People">2 People</option>
-              <option value="3 People">3 People</option>
-              <option value="Family">Family</option>
-            </select>
-          </div>
-
-          <button class="btn-whatsapp" onclick="sendWhatsAppRSVP()">Register via WhatsApp</button>
-        </div>
+        <footer>
+          With love &amp; appreciation &mdash; <strong>Favour &amp; Fortune</strong>
+        </footer>
       </div>
-
-      <!-- SHARE INVITATION -->
-      <div class="share-box">
-        <button class="btn-share" onclick="shareInvite()">📤 Share Invitation on WhatsApp</button>
-      </div>
-
-      <footer>
-        With love &amp; appreciation &mdash; <strong>Fortune &amp; Favor</strong>
-      </footer>
     </div>
   </main>
 
@@ -570,15 +809,16 @@
     function openInvitation() {
       const entrance = document.getElementById("entrance-screen");
       const main = document.getElementById("main-invitation");
-      entrance.classList.add("fade-out");
+      if (entrance.classList.contains("opened")) return;
+
+      entrance.classList.add("opened");
+      main.style.display = "block";
       setTimeout(() => {
         entrance.style.display = "none";
-        main.style.display = "block";
         window.scrollTo({ top: 0, behavior: "smooth" });
-      }, 650);
+      }, 1300);
     }
 
-    // Countdown to Saturday, November 28, 2026 at 11:00 AM WAT (UTC+1)
     const weddingDate = new Date("2026-11-28T11:00:00+01:00").getTime();
 
     function updateCountdown() {
@@ -587,7 +827,7 @@
 
       if (distance <= 0) {
         document.getElementById("countdown").innerHTML =
-          '<strong style="color: var(--gold); font-size: 1.2rem;">Today is the Big Day! 🥂</strong>';
+          '<strong style="color: var(--gold-deep); font-size: 1.3rem;">Today is the Big Day! 🥂</strong>';
         return;
       }
 
@@ -609,7 +849,7 @@
       const name = document.getElementById("guest-name").value.trim() || "A Guest";
       const count = document.getElementById("guest-count").value;
       const phone = "2348130984828";
-      const message = `Hello! I would love to RSVP for Fortune & Favor's Wedding on 28th November.\n\nName: ${name}\nAttending: ${count}`;
+      const message = `Hello! I would love to RSVP for Favour & Fortune's Wedding on 28th November.\n\nName: ${name}\nAttending: ${count}`;
       const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
       window.open(url, "_blank");
     }
@@ -622,12 +862,6 @@
       setTimeout(() => {
         btn.innerText = "Copy";
       }, 2000);
-    }
-
-    function shareInvite() {
-      const siteUrl = window.location.href;
-      const shareText = `You are cordially invited to Fortune & Favor's Wedding on Saturday, 28th of November at Sanyaolu Hall, Sanyaolu Hotel, Daleemo B/stop, Ogun State (11:00 AM). Colors: White & Gold.\n\nView Invitation, Directions & RSVP here:\n${siteUrl}`;
-      window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, "_blank");
     }
   </script>
 </body>
